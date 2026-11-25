@@ -1,0 +1,11 @@
+[functions.notificar-agenda]
+verify_jwt = false
+
+[functions.notificar-lembretes-agenda]
+verify_jwt = false
+
+[functions.send-member-notice]
+verify_jwt = true
+
+[functions.send-custom-notification]
+verify_jwt = true

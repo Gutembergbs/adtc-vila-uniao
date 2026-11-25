@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="index,follow">
+    <meta name="theme-color" content="#0a2540">
+    <title>Solicitar exclusão de conta — ADTC Vila União</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: Arial, Helvetica, sans-serif;
+        color: #172033;
+        background: #f4f7fa;
+      }
+      body {
+        box-sizing: border-box;
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 28px 18px 48px;
+        line-height: 1.6;
+      }
+      main {
+        padding: clamp(20px, 5vw, 40px);
+        border-radius: 20px;
+        background: #fff;
+        box-shadow: 0 8px 32px #0a254012;
+      }
+      h1, h2 { color: #0a2540; line-height: 1.25; }
+      h1 { margin-top: 0; font-size: clamp(1.7rem, 5vw, 2.2rem); }
+      label { display: block; margin-top: 16px; font-weight: 600; }
+      input, textarea {
+        box-sizing: border-box;
+        width: 100%;
+        margin-top: 6px;
+        padding: 12px;
+        border: 1px solid #aeb9c6;
+        border-radius: 8px;
+        font: inherit;
+      }
+      input[type="checkbox"] { width: auto; margin-right: 8px; }
+      .consent { display: flex; align-items: flex-start; font-weight: 400; }
+      button {
+        margin-top: 20px;
+        padding: 12px 18px;
+        border: 0;
+        border-radius: 8px;
+        background: #0f766e;
+        color: white;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      a { color: #075985; }
+      .note { color: #526174; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Solicitar exclusão de conta</h1>
+      <p>
+        Use o formulário abaixo para preparar uma solicitação de exclusão da
+        conta do app ADTC Vila União. O envio abre o aplicativo de e-mail do seu
+        dispositivo; revise a mensagem e toque em <strong>Enviar</strong> para
+        concluir. O formulário não armazena os dados informados nesta página.
+      </p>
+      <p>
+        Após confirmar que a solicitação pertence à pessoa titular, a
+        administração removerá a conta de autenticação, o cadastro de membro,
+        a foto de perfil e os identificadores de notificação associados.
+        Pedidos de oração não são vinculados a uma conta no banco; informe
+        detalhes suficientes para que a administração possa localizar e
+        remover os que foram publicados por você. Registros que precisem ser
+        mantidos por obrigação legal serão limitados a essa finalidade.
+      </p>
+
+      <form id="deletion-request">
+        <label for="name">Nome usado no cadastro</label>
+        <input id="name" name="name" autocomplete="name" required>
+
+        <label for="email">E-mail da conta</label>
+        <input id="email" name="email" type="email" autocomplete="email" required>
+
+        <label for="details">Outros dados que deseja excluir (opcional)</label>
+        <textarea id="details" name="details" rows="4"
+          placeholder="Por exemplo, detalhes para localizar pedidos de oração publicados por você."></textarea>
+
+        <label class="consent" for="confirm">
+          <input id="confirm" name="confirm" type="checkbox" required>
+          Confirmo que sou titular da conta ou estou autorizado(a) a solicitar
+          esta exclusão.
+        </label>
+
+        <button type="submit">Preparar e-mail de solicitação</button>
+      </form>
+
+      <p class="note">
+        Não informe sua senha. Se não conseguir abrir o aplicativo de e-mail,
+        envie a solicitação diretamente para
+        <a href="mailto:gutembergbs.suporte@gmail.com">gutembergbs.suporte@gmail.com</a>.
+        Consulte também a
+        <a href="/politica-privacidade.html">Política de Privacidade</a>.
+      </p>
+    </main>
+    <script>
+      document
+        .getElementById("deletion-request")
+        .addEventListener("submit", (event) => {
+          event.preventDefault();
+          const form = event.currentTarget;
+          if (!form.reportValidity()) return;
+
+          const name = document.getElementById("name").value.trim();
+          const email = document.getElementById("email").value.trim();
+          const details = document.getElementById("details").value.trim();
+          const body = [
+            "Solicito a exclusão da minha conta e dos dados pessoais associados ao app ADTC Vila União.",
+            "",
+            `Nome: ${name}`,
+            `E-mail da conta: ${email}`,
+            "",
+            "Dados adicionais para localizar conteúdo que desejo excluir:",
+            details || "Não informado",
+            "",
+            "Não incluí minha senha nesta solicitação."
+          ].join("\n");
+          const mailto = new URL("mailto:gutembergbs.suporte@gmail.com");
+          mailto.searchParams.set(
+            "subject",
+            "Solicitação de exclusão de conta - ADTC Vila União"
+          );
+          mailto.searchParams.set("body", body);
+          window.location.href = mailto.toString();
+        });
+    </script>
+  </body>
+</html>

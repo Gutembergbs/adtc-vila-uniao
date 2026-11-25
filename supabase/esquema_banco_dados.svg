@@ -1,0 +1,213 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1760" height="1430" viewBox="0 0 1760 1430" role="img" aria-labelledby="title description">
+  <title id="title">Esquema atual do banco de dados do aplicativo ADTC Vila União</title>
+  <desc id="description">Diagrama ER das tabelas public e chaves estrangeiras confirmadas por consulta somente de leitura ao Supabase remoto.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748b"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#0f172a" flood-opacity=".10"/>
+    </filter>
+    <style>
+      text { font-family: "Segoe UI", Arial, sans-serif; fill: #0f172a; }
+      .title { font-size: 30px; font-weight: 700; fill: #f8fafc; }
+      .subtitle { font-size: 14px; fill: #cbd5e1; }
+      .section { font-size: 13px; font-weight: 700; letter-spacing: 1.4px; fill: #64748b; }
+      .table { filter: url(#shadow); }
+      .head { font-size: 17px; font-weight: 700; fill: #fff; }
+      .tag { font-size: 10px; font-weight: 700; fill: #fff; letter-spacing: .5px; }
+      .field { font-size: 12.5px; fill: #334155; }
+      .note { font-size: 12px; fill: #475569; }
+      .line { fill: none; stroke: #475569; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrow); filter: drop-shadow(0 0 2px #f1f5f9); }
+      .external-line { fill: none; stroke: #64748b; stroke-width: 2.4; stroke-dasharray: 7 5; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrow); filter: drop-shadow(0 0 2px #f1f5f9); }
+    </style>
+  </defs>
+
+  <rect width="1760" height="1430" fill="#f1f5f9"/>
+  <rect width="1760" height="130" fill="#0f2742"/>
+  <text x="54" y="58" class="title">Esquema do banco de dados</text>
+  <text x="54" y="88" class="subtitle">ADTC Vila União · Supabase / PostgreSQL · estrutura consultada no banco remoto</text>
+  <text x="54" y="112" class="subtitle">PK = chave primária · FK = chave estrangeira · consulta somente de leitura; dados dos usuários não foram exportados</text>
+
+  <text x="50" y="174" class="section">IDENTIDADE E CONTEÚDO PÚBLICO</text>
+  <text x="50" y="510" class="section">MEMBROS E RELACIONAMENTOS</text>
+  <text x="50" y="910" class="section">VISITANTES E TABELAS AUXILIARES</text>
+
+  <!-- External Supabase resources -->
+  <g class="table">
+    <rect x="650" y="145" width="320" height="58" rx="12" fill="#334155"/>
+    <text x="672" y="171" class="head">auth.users</text>
+    <text x="672" y="191" class="field" fill="#e2e8f0">PK id · gerenciado pelo Supabase Auth</text>
+  </g>
+  <g class="table">
+    <rect x="1390" y="145" width="320" height="58" rx="12" fill="#334155"/>
+    <text x="1412" y="171" class="head">storage.objects</text>
+    <text x="1412" y="191" class="field" fill="#e2e8f0">arquivos privados · buckets de mídia</text>
+  </g>
+
+  <!-- Administration and public content -->
+  <g class="table">
+    <rect x="50" y="220" width="320" height="112" rx="12" fill="#fff"/>
+    <path d="M62 220 H358 Q370 220 370 232 V262 H50 V232 Q50 220 62 220" fill="#475569"/>
+    <text x="70" y="248" class="head">administradores</text>
+    <rect x="280" y="230" width="72" height="18" rx="9" fill="#64748b"/>
+    <text x="291" y="243" class="tag">ACESSO</text>
+    <text x="70" y="285" class="field">PK, FK usuario_id → auth.users.id</text>
+    <text x="70" y="306" class="field">criado_em</text>
+  </g>
+
+  <g class="table">
+    <rect x="450" y="220" width="390" height="260" rx="12" fill="#fff"/>
+    <path d="M462 220 H828 Q840 220 840 232 V262 H450 V232 Q450 220 462 220" fill="#0f766e"/>
+    <text x="470" y="248" class="head">departamentos</text>
+    <rect x="750" y="230" width="70" height="18" rx="9" fill="#14b8a6"/>
+    <text x="763" y="243" class="tag">PÚBLICO</text>
+    <text x="470" y="285" class="field">PK id · nome · ordem</text>
+    <text x="470" y="307" class="field">nome_conjunto · historico_conjunto</text>
+    <text x="470" y="329" class="field">descricao · responsabilidades[]</text>
+    <text x="470" y="351" class="field">responsavel · horario_reuniao</text>
+    <text x="470" y="373" class="field">icone · cor · tags[] · instagram</text>
+    <text x="470" y="439" class="note">Base para a vitrine de departamentos.</text>
+    <text x="470" y="459" class="note">1 departamento → vários eventos e vínculos.</text>
+  </g>
+
+  <g class="table">
+    <rect x="960" y="220" width="460" height="270" rx="12" fill="#fff"/>
+    <path d="M972 220 H1408 Q1420 220 1420 232 V262 H960 V232 Q960 220 972 220" fill="#2563eb"/>
+    <text x="980" y="248" class="head">eventos_agenda</text>
+    <rect x="1330" y="230" width="70" height="18" rx="9" fill="#60a5fa"/>
+    <text x="1343" y="243" class="tag">PÚBLICO</text>
+    <text x="980" y="285" class="field">PK id · titulo · subtitulo · tipo</text>
+    <text x="980" y="307" class="field">horario · data_evento? · dia_semana?</text>
+    <text x="980" y="329" class="field">descricao_dias · ciclo_recorrencia</text>
+    <text x="980" y="351" class="field">FK departamento_id? → departamentos.id</text>
+    <text x="980" y="373" class="field">local · observacoes · tema_mensal</text>
+    <text x="980" y="395" class="field">icone · cor · anexo_path? · anexo_nome?</text>
+    <text x="980" y="415" class="field">link_texto? · link_url?</text>
+    <text x="980" y="455" class="note">Anexos ficam no bucket privado materiais-eventos.</text>
+    <text x="980" y="475" class="note">1 evento → várias escalas individuais.</text>
+  </g>
+
+  <g class="table">
+    <rect x="1450" y="220" width="260" height="164" rx="12" fill="#fff"/>
+    <path d="M1462 220 H1698 Q1710 220 1710 232 V262 H1450 V232 Q1450 220 1462 220" fill="#475569"/>
+    <text x="1470" y="248" class="head">device_tokens</text>
+    <text x="1470" y="285" class="field">PK id</text>
+    <text x="1470" y="307" class="field">FK user_id → auth.users.id</text>
+    <text x="1470" y="329" class="field">token · platform · agenda_enabled</text>
+    <text x="1470" y="349" class="field">created_at · updated_at</text>
+    <text x="1470" y="369" class="field">UNIQUE (user_id, token)</text>
+  </g>
+
+  <!-- Member data and join tables -->
+  <g class="table">
+    <rect x="50" y="530" width="440" height="330" rx="12" fill="#fff"/>
+    <path d="M62 530 H478 Q490 530 490 542 V572 H50 V542 Q50 530 62 530" fill="#7c3aed"/>
+    <text x="70" y="558" class="head">membros</text>
+    <rect x="400" y="540" width="70" height="18" rx="9" fill="#a78bfa"/>
+    <text x="413" y="553" class="tag">PRIVADO</text>
+    <text x="70" y="595" class="field">PK id · FK usuario_id? → auth.users.id</text>
+    <text x="70" y="617" class="field">matricula · email · nome · apelido?</text>
+    <text x="70" y="639" class="field">telefone · departamento · congregacao</text>
+    <text x="70" y="661" class="field">data_nascimento? · data_batismo?</text>
+    <text x="70" y="683" class="field">foto_path? · ativo · criado_em</text>
+    <text x="70" y="705" class="field">status_acesso: pendente · autorizado · bloqueado</text>
+    <text x="70" y="747" class="note">usuario_id vincula o perfil à conta autenticada.</text>
+    <text x="70" y="769" class="note">Relaciona membros e agenda por tabelas vinculadas.</text>
+    <text x="70" y="817" class="note">Fotos no bucket privado fotos-membros.</text>
+    <text x="70" y="837" class="note">Acesso protegido por RLS.</text>
+  </g>
+
+  <g class="table">
+    <rect x="560" y="570" width="380" height="184" rx="12" fill="#fff"/>
+    <path d="M572 570 H928 Q940 570 940 582 V612 H560 V582 Q560 570 572 570" fill="#0f766e"/>
+    <text x="580" y="598" class="head">departamentos_membros</text>
+    <text x="580" y="635" class="field">PK id</text>
+    <text x="580" y="657" class="field">FK departamento_id → departamentos.id</text>
+    <text x="580" y="679" class="field">FK membro_id → membros.id</text>
+    <text x="580" y="701" class="field">cargo · criado_em</text>
+    <text x="580" y="733" class="note">UNIQUE (departamento_id, membro_id, cargo)</text>
+  </g>
+
+  <g class="table">
+    <rect x="1000" y="560" width="430" height="184" rx="12" fill="#fff"/>
+    <path d="M1012 560 H1418 Q1430 560 1430 572 V602 H1000 V572 Q1000 560 1012 560" fill="#7c3aed"/>
+    <text x="1020" y="588" class="head">escalas_membros</text>
+    <text x="1020" y="625" class="field">PK id · FK membro_id → membros.id</text>
+    <text x="1020" y="647" class="field">FK departamento_id → departamentos.id</text>
+    <text x="1020" y="669" class="field">FK evento_id → eventos_agenda.id</text>
+    <text x="1020" y="691" class="field">data · criado_em</text>
+    <text x="1020" y="723" class="note">UNIQUE (membro, departamento, evento, data)</text>
+  </g>
+
+  <g class="table">
+    <rect x="1000" y="790" width="430" height="204" rx="12" fill="#fff"/>
+    <path d="M1012 790 H1418 Q1430 790 1430 802 V832 H1000 V802 Q1000 790 1012 790" fill="#be185d"/>
+    <text x="1020" y="818" class="head">avisos_membros</text>
+    <text x="1020" y="855" class="field">PK id · FK membro_id → membros.id</text>
+    <text x="1020" y="877" class="field">FK departamento_id? → departamentos.id</text>
+    <text x="1020" y="899" class="field">titulo · resumo · conteudo · categoria</text>
+    <text x="1020" y="921" class="field">criado_em · visualizado_em?</text>
+    <text x="1020" y="967" class="note">Avisos direcionados; leitura controlada por RLS.</text>
+  </g>
+
+  <g class="table">
+    <rect x="50" y="930" width="440" height="150" rx="12" fill="#fff"/>
+    <path d="M62 930 H478 Q490 930 490 942 V972 H50 V942 Q50 930 62 930" fill="#0f766e"/>
+    <text x="70" y="958" class="head">visitantes</text>
+    <rect x="385" y="940" width="85" height="18" rx="9" fill="#14b8a6"/>
+    <text x="397" y="953" class="tag">CADASTRO</text>
+    <text x="70" y="995" class="field">PK id · FK usuario_id → auth.users.id</text>
+    <text x="70" y="1017" class="field">email · nome · telefone · bairro</text>
+    <text x="70" y="1039" class="field">criado_em</text>
+    <text x="70" y="1065" class="note">Cadastro vinculado à conta autenticada.</text>
+  </g>
+
+  <g class="table">
+    <rect x="560" y="1010" width="380" height="150" rx="12" fill="#fff"/>
+    <path d="M572 1010 H928 Q940 1010 940 1022 V1052 H560 V1022 Q560 1010 572 1010" fill="#475569"/>
+    <text x="580" y="1038" class="head">cargos_departamento</text>
+    <text x="580" y="1075" class="field">PK nome · ordem · criado_em</text>
+    <text x="580" y="1133" class="note">Catálogo de cargos usados nos departamentos.</text>
+  </g>
+
+  <!-- Tables without explicit foreign keys in the SQL definitions -->
+  <g class="table">
+    <rect x="50" y="1110" width="440" height="170" rx="12" fill="#fff"/>
+    <path d="M62 1110 H478 Q490 1110 490 1122 V1152 H50 V1122 Q50 1110 62 1110" fill="#d97706"/>
+    <text x="70" y="1138" class="head">pedidos_oracao</text>
+    <rect x="385" y="1120" width="85" height="18" rx="9" fill="#f59e0b"/>
+    <text x="397" y="1133" class="tag">PÚBLICO</text>
+    <text x="70" y="1175" class="field">PK id · nome_autor · pedido · categoria</text>
+    <text x="70" y="1197" class="field">criado_em · quantidade_oracoes · anonimo · oculto</text>
+    <text x="70" y="1243" class="note">Tabela independente; conteúdo moderado por RLS e trigger.</text>
+  </g>
+
+  <!-- Connections are drawn above the tables so the arrowheads remain visible. -->
+  <path class="external-line" d="M700 203 V212 H210 V220"/>
+  <path class="external-line" d="M740 203 V206 H410 V530"/>
+  <path class="external-line" d="M950 203 V210 H1580 V220"/>
+  <path class="external-line" d="M650 203 H30 V1005 H50"/>
+  <path class="external-line" d="M1390 190 H1440 V420 H1420"/>
+  <path class="line" d="M840 335 H960"/>
+  <path class="line" d="M620 480 V515 H740 V570"/>
+  <path class="line" d="M830 480 V510 H945 V700 H1000"/>
+  <path class="line" d="M1200 490 V560"/>
+  <path class="line" d="M490 625 H560"/>
+  <path class="line" d="M490 700 H520 V525 H975 V620 H1000"/>
+  <path class="line" d="M490 815 H515 V1020 H1215 V994"/>
+  <path class="line" d="M820 480 V510 H970 V930 H1000"/>
+
+  <!-- Legend -->
+  <rect x="1000" y="1040" width="710" height="184" rx="14" fill="#e2e8f0"/>
+  <text x="1024" y="1074" font-size="16" font-weight="700">Como ler o diagrama</text>
+  <path d="M1026 1104 H1110" class="line"/>
+  <text x="1124" y="1109" class="note">linha contínua: FK entre tabelas public.*</text>
+  <path d="M1026 1136 H1110" class="external-line"/>
+  <text x="1124" y="1141" class="note">linha tracejada: Auth ou Storage do Supabase</text>
+  <text x="1024" y="1176" class="note">Campos resumidos; tipos, índices e políticas RLS podem variar.</text>
+  <text x="1024" y="1198" class="note">Os arquivos ficam no Storage; as tabelas guardam seus caminhos.</text>
+  <text x="1024" y="1218" class="note">visitantes e status_acesso constam no schema remoto consultado.</text>
+
+  <text x="50" y="1370" class="note">Fonte: consulta SQL somente de leitura ao schema public remoto. Nenhuma tabela, migration ou registro foi alterado.</text>
+</svg>
